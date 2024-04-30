@@ -1,9 +1,12 @@
-FROM bellsoft/liberica-openjdk-alpine:11.0.16.1-1
+FROM openjdk:latest
+# устанавливаем рабочую директорию
+WORKDIR /usr/src/app
 
-COPY ./src ./src
+COPY ./src/main/java .
 
-RUN mkdir ./out
+RUN javac -sourcepath . -d out ./org/example/sem1/task1/Program.java
 
-RUN javac -sourcepath ./src -d out ./src/main/java/org/example/Main.java
+WORKDIR /usr/src/app/out
 
-CMD java -classpath ./out org.example.Main
+#CMD java -classpath . org.example.sem1.task1.Program
+ENTRYPOINT ["java", "org.example.sem1.task1.Program"]
