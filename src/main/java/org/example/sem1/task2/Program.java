@@ -13,8 +13,6 @@ public class Program {
 
     public static void main(String[] args) throws SQLException, InterruptedException {
 
-        Thread.sleep(20000);
-
         String url = "jdbc:mysql://employees-db:5001/";
         String user = "root";
         String password = "123456";
@@ -43,7 +41,7 @@ public class Program {
     }
 
     private static void  useDatabase(Connection connection) throws SQLException {
-        String useDatabaseSQL = "Use employeesDb;";
+        String useDatabaseSQL = "USE employeesDb;";
         try (PreparedStatement statement = connection.prepareStatement(useDatabaseSQL)) {
             statement.execute();
         }
