@@ -1,6 +1,7 @@
 package org.example.hw5;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Program {
 
@@ -30,12 +31,14 @@ public class Program {
                  copyFile(subFile);
              }
         } else if (source.isFile()) {
+            StringBuilder stringBuilder = new StringBuilder();
             try (FileInputStream fileInputStream = new FileInputStream(source)) {
                 int c = 0;
                 try (FileOutputStream fileOutputStream = new FileOutputStream(copy)) {
                     while ((c = fileInputStream.read()) != -1) {
-                        fileOutputStream.write(c);
+                        stringBuilder.append((char) c);
                     }
+                    fileOutputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
                 }
             }
         }
