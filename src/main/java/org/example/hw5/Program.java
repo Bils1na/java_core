@@ -9,9 +9,17 @@ public class Program {
 
 
     public static void main(String[] args) throws IOException {
+        long timeStart = System.nanoTime();
         createBackup(new File(PARENT_DIRECTORY));
+        double deltaTime = (System.nanoTime() - timeStart) * 0.000000001;
+        System.out.println(deltaTime);
     }
 
+    /**
+     * Создает backup для файлов проекта
+     * @param parentDirectory файл проекта
+     * @throws IOException
+     */
     private static void createBackup(File parentDirectory) throws IOException {
         makeDirectory(PARENT_DIRECTORY, "backup");
 
@@ -21,32 +29,44 @@ public class Program {
         }
     }
 
-    private static void copyFile(File fileName) throws IOException {
-        File source = new File(String.valueOf(fileName));
-        File copy = new File(String.format(".\\backup\\%s", fileName.toString().substring(2)));
+    /**
+     * Создает копию файла
+     * @param file оригинальный файл
+     * @throws IOException
+     */
+    private static void copyFile(File file) throws IOException {
+        File source = new File(String.valueOf(file));
+        File copy = new File(String.format(".\\backup\\%s", file.toString().substring(2)));
 
-        if (source.isDirectory() && !source.isHidden() && !source.toString().equals(".\\backup")) {
-             makeDirectory(".\\backup\\", source.toString().substring(2));
+        if (source.isDirectory() && !source.isHidden()
+                && !source.toString().equals(".\\backup")) {
+             makeDirectory(".\\backup\\",
+                     source.toString().substring(2));
              for (File subFile : source.listFiles()) {
                  copyFile(subFile);
              }
         } else if (source.isFile()) {
             StringBuilder stringBuilder = new StringBuilder();
             try (FileInputStream fileInputStream = new FileInputStream(source)) {
-                int c = 0;
+                int symbol = 0;
                 try (FileOutputStream fileOutputStream = new FileOutputStream(copy)) {
-                    while ((c = fileInputStream.read()) != -1) {
-                        stringBuilder.append((char) c);
+                    while ((symbol = fileInputStream.read()) != -1) {
+                        stringBuilder.append((char) symbol);
+//                        fileOutputStream.write(symbol);
                     }
                     fileOutputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
                 }
             }
         }
-
     }
 
-    private static void makeDirectory(String currentDirectory, String newDirectoryName) {
-        File newDirectory = new File(currentDirectory, newDirectoryName);
+    /**
+     * Создает новую папку
+     * @param dir1 путь к папке 1
+     * @param dir2 путь к папке 2
+     */
+    private static void makeDirectory(String dir1, String dir2) {
+        File newDirectory = new File(dir1, dir2);
 
         if (!newDirectory.exists()) {
             newDirectory.mkdir();
