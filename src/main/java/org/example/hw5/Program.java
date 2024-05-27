@@ -1,28 +1,37 @@
 package org.example.hw5;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class Program {
 
     public static void main(String[] args) throws IOException {
-        makeDirectory(".");
-        try (FileOutputStream fileOutputStream = new FileOutputStream("./backup/file.txt")) {
-            fileOutputStream.write("Hello".getBytes());
+        createBackup(new File("."));
+    }
+
+    private static void createBackup(File parentDirectory) throws IOException {
+        makeDirectory(".", "backup");
+
+        File[] files = parentDirectory.listFiles();
+        for (File file : files) {
+            copyFile(file);
         }
     }
 
-    private static void createBackup() {
-
+    private static void copyFile(File fileName) throws IOException {
+        File source = new File(String.valueOf(fileName));
+        File copy = new File(String.format("%s", fileName));
+        try (FileInputStream fileInputStream = new FileInputStream(source)) {
+            int c = 0;
+            try (FileOutputStream fileOutputStream = new FileOutputStream(copy)) {
+                while ((c = fileInputStream.read()) != -1) {
+                    fileOutputStream.write(c);
+                }
+            }
+        }
     }
 
-    private static void copyFile(File fileName) {
-
-    }
-
-    private static void makeDirectory(String currentDirectory) {
-        File newDirectory = new File(currentDirectory, "backup");
+    private static void makeDirectory(String currentDirectory, String newDirectoryName) {
+        File newDirectory = new File(currentDirectory, newDirectoryName);
 
         if (!newDirectory.exists()) {
             newDirectory.mkdir();
