@@ -22,14 +22,14 @@ public class Program {
 
     private static void copyFile(File fileName) throws IOException {
         File source = new File(String.valueOf(fileName));
-        File copy = new File(String.format(".\\backup\\%s", fileName));
+        File copy = new File(String.format(".\\backup\\%s", fileName.toString().substring(2)));
 
-        if (source.isDirectory()) {
-             makeDirectory(".\\backup\\", String.format(source.getName()));
-             for (File subFile : fileName) {
-
+        if (source.isDirectory() && !source.isHidden() && !source.toString().equals(".\\backup")) {
+             makeDirectory(".\\backup\\", source.toString().substring(2));
+             for (File subFile : source.listFiles()) {
+                 copyFile(subFile);
              }
-        } else {
+        } else if (source.isFile()) {
             try (FileInputStream fileInputStream = new FileInputStream(source)) {
                 int c = 0;
                 try (FileOutputStream fileOutputStream = new FileOutputStream(copy)) {
