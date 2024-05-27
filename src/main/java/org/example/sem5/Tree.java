@@ -26,24 +26,19 @@ public class Tree {
 
         File[] files = file.listFiles();
 
-        int subDirTotal = 0;
         int subFileTotal = 0;
         if (files != null) {
             for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory() && !files[i].isHidden()) {
-                    subDirTotal++;
-                } else if (files[i].isFile() && !files[i].isHidden()) {
+                if (!files[i].isHidden()) {
                     subFileTotal++;
                 }
             }
 
 
-            int subDirCounter = 0;
             int subFileCounter = 0;
             for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory() && !files[i].isHidden()) {
-                    print(files[i], indent, subDirTotal == ++subDirCounter);
-                } else if (files[i].isFile() && !files[i].isHidden()) {
+
+                if (!files[i].isHidden()) {
                     print(files[i], indent, subFileTotal == ++subFileCounter);
                 }
             }
