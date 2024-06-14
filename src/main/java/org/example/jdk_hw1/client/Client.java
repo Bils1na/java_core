@@ -49,9 +49,7 @@ public class Client extends JFrame {
         loginInputPanel.add(username);
         loginInputPanel.add(password);
         loginPanel.add(loginInputPanel);
-        if (!isLogin) {
-            loginPanel.add(btnLogin);
-        }
+        loginPanel.add(btnLogin);
         messagePanel.add(message);
         messagePanel.add(btnSend);
 
@@ -70,11 +68,14 @@ public class Client extends JFrame {
                         logChat += "Welcome, " + usernameChat;
                         loginPanel.remove(loginInputPanel);
                         loginPanel.remove(btnLogin);
-
                         loginPanel.repaint();
                     }
                     isLogin = true;
                     chat.setText(logChat);
+
+                    server.setLogHistory(server.getLogHistory() + (usernameChat + " connected.\n"));
+                    server.getLog().setText(server.getLogHistory());
+                    System.out.println("lol");
                 }
             }
         });
@@ -82,7 +83,9 @@ public class Client extends JFrame {
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                if (isLogin) {
+                    messageChat = message.getText();
+                }
             }
         });
 

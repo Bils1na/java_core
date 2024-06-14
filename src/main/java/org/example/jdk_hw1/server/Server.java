@@ -16,6 +16,18 @@ public class Server extends JFrame {
     private boolean isServerWorking;
     private String logHistory = "";
 
+    public JTextArea getLog() {
+        return log;
+    }
+
+    public String getLogHistory() {
+        return logHistory;
+    }
+
+    public void setLogHistory(String logHistory) {
+        this.logHistory = logHistory;
+    }
+
     public Server() {
         isServerWorking = false;
 
