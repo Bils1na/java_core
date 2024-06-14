@@ -14,7 +14,7 @@ public class Server extends JFrame {
     JButton start, stop;
 
     private boolean isServerWorking;
-    private String logHistory;
+    private String logHistory = "";
 
     public Server() {
         isServerWorking = false;
@@ -29,7 +29,6 @@ public class Server extends JFrame {
         stop = new JButton("Stop");
         log = new JTextArea();
         log.setEditable(false);
-        log.setFocusable(false);
         JPanel btnPanel = new JPanel(new GridLayout(1, 2));
         btnPanel.add(start);
         btnPanel.add(stop);

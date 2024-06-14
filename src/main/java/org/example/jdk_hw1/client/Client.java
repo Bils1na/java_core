@@ -35,7 +35,6 @@ public class Client extends JFrame {
         btnSend = new JButton("send");
         chat = new JTextArea();
         chat.setEditable(false);
-        chat.setFocusable(false);
 
         loginInputPanel.add(ip);
         loginInputPanel.add(port);
