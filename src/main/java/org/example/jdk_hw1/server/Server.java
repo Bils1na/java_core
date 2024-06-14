@@ -2,6 +2,8 @@ package org.example.jdk_hw1.server;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Server extends JFrame {
 
@@ -11,7 +13,12 @@ public class Server extends JFrame {
     JTextArea log;
     JButton start, stop;
 
+    private boolean isServerWorking;
+    private String logHistory;
+
     public Server() {
+        isServerWorking = false;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
@@ -28,6 +35,23 @@ public class Server extends JFrame {
         btnPanel.add(stop);
         add(log, BorderLayout.CENTER);
         add(btnPanel, BorderLayout.SOUTH);
+
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isServerWorking = true;
+                logHistory += "Server started.\n";
+                log.setText(logHistory);
+            }
+        });
+        stop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                isServerWorking = false;
+                logHistory += "Server stopped.\n";
+                log.setText(logHistory);
+            }
+        });
 
         setVisible(true);
     }
