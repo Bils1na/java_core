@@ -22,6 +22,7 @@ public class Client extends JFrame {
 
         setTitle("Client chat");
         setResizable(false);
+
         JPanel loginInputPanel = new JPanel(new GridLayout(2, 3));
         JPanel loginPanel = new JPanel(new GridLayout(1, 2));
         JPanel messagePanel = new JPanel(new GridLayout(1, 2));
@@ -30,19 +31,21 @@ public class Client extends JFrame {
         username = new JTextField();
         password = new JPasswordField();
         btnLogin = new JButton("login");
+        message = new JTextField();
+        btnSend = new JButton("send");
+        chat = new JTextArea();
+        chat.setEditable(false);
+        chat.setFocusable(false);
+
         loginInputPanel.add(ip);
         loginInputPanel.add(port);
         loginInputPanel.add(username);
         loginInputPanel.add(password);
-        chat = new JTextArea();
-        chat.setEditable(false);
-        chat.setFocusable(false);
-        message = new JTextField();
-        btnSend = new JButton("send");
         loginPanel.add(loginInputPanel);
         loginPanel.add(btnLogin);
         messagePanel.add(message);
         messagePanel.add(btnSend);
+
         add(loginPanel, BorderLayout.NORTH);
         add(chat, BorderLayout.CENTER);
         add(messagePanel, BorderLayout.SOUTH);
