@@ -4,6 +4,8 @@ import org.example.jdk_hw1.server.Server;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Client extends JFrame {
 
@@ -15,7 +17,13 @@ public class Client extends JFrame {
     JButton btnLogin, btnSend;
     JTextArea chat;
 
+    private boolean isLogin;
+    private String usernameChat, messageChat;
+    private String logChat = "";
+
     public Client(Server server) {
+        isLogin = false;
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
@@ -41,13 +49,42 @@ public class Client extends JFrame {
         loginInputPanel.add(username);
         loginInputPanel.add(password);
         loginPanel.add(loginInputPanel);
-        loginPanel.add(btnLogin);
+        if (!isLogin) {
+            loginPanel.add(btnLogin);
+        }
         messagePanel.add(message);
         messagePanel.add(btnSend);
 
         add(loginPanel, BorderLayout.NORTH);
         add(chat, BorderLayout.CENTER);
         add(messagePanel, BorderLayout.SOUTH);
+
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!server.isServerWorking()) {
+                    chat.setText("Server is stopped.\n");
+                } else {
+                    if (!isLogin) {
+                        usernameChat = username.getText();
+                        logChat += "Welcome, " + usernameChat;
+                        loginPanel.remove(loginInputPanel);
+                        loginPanel.remove(btnLogin);
+
+                        loginPanel.repaint();
+                    }
+                    isLogin = true;
+                    chat.setText(logChat);
+                }
+            }
+        });
+
+        btnSend.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
 
         setVisible(true);
     }

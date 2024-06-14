@@ -38,7 +38,7 @@ public class Server extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (isServerWorking != true) {
+                if (!isServerWorking) {
                     isServerWorking = true;
                     logHistory += "Server started.\n";
                 } else {
@@ -50,7 +50,7 @@ public class Server extends JFrame {
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (isServerWorking == true) {
+                if (isServerWorking) {
                     isServerWorking = false;
                     logHistory += "Server stopped.\n";
                 }
@@ -61,4 +61,7 @@ public class Server extends JFrame {
         setVisible(true);
     }
 
+    public boolean isServerWorking() {
+        return isServerWorking;
+    }
 }
