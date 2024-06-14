@@ -1,5 +1,7 @@
 package org.example.jdk_hw1.client;
 
+import org.example.jdk_hw1.server.Server;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,7 +15,7 @@ public class Client extends JFrame {
     JButton btnLogin, btnSend;
     JTextArea chat;
 
-    public Client() {
+    public Client(Server server) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
@@ -37,8 +39,6 @@ public class Client extends JFrame {
         chat.setFocusable(false);
         message = new JTextField();
         btnSend = new JButton("send");
-//        add(loginPanel, BorderLayout.NORTH);
-//        add(btnLogin, BorderLayout.EAST);
         loginPanel.add(loginInputPanel);
         loginPanel.add(btnLogin);
         messagePanel.add(message);
