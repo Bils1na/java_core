@@ -77,7 +77,7 @@ public class Client extends JFrame {
                     chat.setText(logChat);
 
                     server.setLogHistory(server.getLogHistory() + (usernameChat + " connected.\n"));
-                    server.getLog().setText(server.getLogHistory());
+                    server.getLog().setText((server.getLogHistory() + "\n" + server.getChatHistory()));
                 }
             }
         });
