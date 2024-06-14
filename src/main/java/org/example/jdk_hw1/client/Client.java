@@ -89,9 +89,13 @@ public class Client extends JFrame {
                     messageChat = message.getText();
                     logChat += usernameChat + ": " + messageChat + "\n";
                     chat.setText(logChat);
+                    chat.revalidate();
+                    chat.repaint();
 
                     server.setChatHistory(server.getChatHistory() + (usernameChat + ": " + messageChat + "\n"));
                     server.getLog().setText((server.getLogHistory() + "\n" + server.getChatHistory()));
+
+
                 } else {
                     chat.setText("Server is stopped.\n");
                 }
