@@ -38,16 +38,22 @@ public class Server extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                isServerWorking = true;
-                logHistory += "Server started.\n";
+                if (isServerWorking != true) {
+                    isServerWorking = true;
+                    logHistory += "Server started.\n";
+                } else {
+                    logHistory += "Server is already started.\n";
+                }
                 log.setText(logHistory);
             }
         });
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                isServerWorking = false;
-                logHistory += "Server stopped.\n";
+                if (isServerWorking == true) {
+                    isServerWorking = false;
+                    logHistory += "Server stopped.\n";
+                }
                 log.setText(logHistory);
             }
         });
