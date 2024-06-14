@@ -65,17 +65,17 @@ public class Client extends JFrame {
                 } else {
                     if (!isLogin) {
                         usernameChat = username.getText();
-                        logChat += "Welcome, " + usernameChat;
+                        logChat += "Welcome, " + usernameChat + "\n";
                         loginPanel.remove(loginInputPanel);
                         loginPanel.remove(btnLogin);
                         loginPanel.repaint();
+                        chat.setText(logChat);
                     }
                     isLogin = true;
                     chat.setText(logChat);
 
                     server.setLogHistory(server.getLogHistory() + (usernameChat + " connected.\n"));
                     server.getLog().setText(server.getLogHistory());
-                    System.out.println("lol");
                 }
             }
         });
@@ -83,8 +83,15 @@ public class Client extends JFrame {
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (isLogin) {
+                if (isLogin && server.isServerWorking()) {
                     messageChat = message.getText();
+                    logChat += usernameChat + ": " + messageChat + "\n";
+                    chat.setText(logChat);
+
+                    server.setChatHistory(server.getChatHistory() + (usernameChat + ": " + messageChat + "\n"));
+                    server.getLog().setText((server.getLogHistory() + "\n" + server.getChatHistory()));
+                } else {
+                    chat.setText("Server is stopped.\n");
                 }
             }
         });

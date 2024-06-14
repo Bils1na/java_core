@@ -15,6 +15,15 @@ public class Server extends JFrame {
 
     private boolean isServerWorking;
     private String logHistory = "";
+    private String chatHistory = "";
+
+    public String getChatHistory() {
+        return chatHistory;
+    }
+
+    public void setChatHistory(String chatHistory) {
+        this.chatHistory = chatHistory;
+    }
 
     public JTextArea getLog() {
         return log;
