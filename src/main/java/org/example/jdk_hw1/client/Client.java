@@ -34,10 +34,10 @@ public class Client extends JFrame {
         JPanel loginInputPanel = new JPanel(new GridLayout(2, 3));
         JPanel loginPanel = new JPanel(new GridLayout(1, 2));
         JPanel messagePanel = new JPanel(new GridLayout(1, 2));
-        ip = new JTextField();
-        port = new JTextField();
+        ip = new JTextField("127.0.0.1");
+        port = new JTextField("8150");
         username = new JTextField();
-        password = new JPasswordField();
+        password = new JPasswordField("123456");
         btnLogin = new JButton("login");
         message = new JTextField();
         btnSend = new JButton("send");
@@ -65,10 +65,12 @@ public class Client extends JFrame {
                 } else {
                     if (!isLogin) {
                         usernameChat = username.getText();
-                        logChat += "Welcome, " + usernameChat + "\n";
+                        logChat += "Welcome, " + usernameChat + "\n"
+                        + server.getChatHistory();
                         loginPanel.remove(loginInputPanel);
                         loginPanel.remove(btnLogin);
                         loginPanel.repaint();
+                        System.out.println(server.getChatHistory());
                         chat.setText(logChat);
                     }
                     isLogin = true;
