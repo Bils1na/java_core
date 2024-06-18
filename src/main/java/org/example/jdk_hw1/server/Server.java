@@ -21,16 +21,7 @@ public class Server extends JFrame {
 
     private ArrayList<Client> onlineUsers = new ArrayList();
     private String logHistory = "";
-    private String chatHistory = "";
 
-
-    public String getChatHistory() {
-        return chatHistory;
-    }
-
-    public void setChatHistory(String chatHistory) {
-        this.chatHistory = chatHistory;
-    }
 
     public JTextArea getLog() {
         return log;
@@ -99,6 +90,12 @@ public class Server extends JFrame {
             return true;
         } else {
             return false;    
+        }
+    }
+
+    public void disconnectUser(Client client) {
+        if (onlineUsers.contains(client)) {
+            onlineUsers.remove(client);
         }
     }
 }

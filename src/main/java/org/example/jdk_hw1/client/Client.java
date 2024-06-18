@@ -102,7 +102,40 @@ public class Client extends JFrame {
     }
 
     private void connectToServer() {
-        
+        if (server.connectUser(this)) {
+            appendLog("Вы успешно подключились!\n");
+            loginPanel.setVisible(false);
+            isLogin = true;
+            usernameChat = username.getText();
+            String log = server.getLogHistory();
+            if (log != null) {
+                appendLog(log);
+            }
+        } else {
+            appendLog("Подключение не удалось.\n");
+        }
+    }
+
+    public void disconnectFromServer() {
+        if (isLogin) {
+            loginPanel.setVisible(true);
+            isLogin = false;
+            server.disconnectUser(this);
+            appendLog("Вы были отключены от сервера!\n");
+        }
+    }
+
+
+    public void message() {
+        if (isLogin) {
+            messageChat = message.getText();
+            if (!text.equals("")) {
+                server.message(usernameChat + ": " + messageChat);
+                message.setText("");
+            }
+        } else {
+            appendLog("Нет подключения к серверу!");
+        }
     }
 
     private void answer(String text) {
