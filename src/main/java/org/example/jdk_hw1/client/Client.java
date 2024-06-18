@@ -32,15 +32,10 @@ public class Client extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
-
         setTitle("Client chat");
         setResizable(false);
 
         createPanel();
-
-        
-
-        
 
         setVisible(true);
     }
@@ -151,6 +146,7 @@ public class Client extends JFrame {
         chat.append(text + "\n");
     }
 
+    @Override
     protected void processWindowEvent(WindowEvent e) {
         if (e.getID() == WindowEvent.WINDOW_CLOSING){
             disconnectFromServer();
