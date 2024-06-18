@@ -19,28 +19,41 @@ public class ClientUI extends JFrame implements View {
     JPasswordField password;
     JButton btnLogin, btnSend;
     JTextArea chat;
-
-    private boolean isLogin;
-    private Server server;
-    private JPanel loginPanel;
-    private String usernameChat, messageChat;
+    JPanel loginPanel;
 
     private Controller controller;
 
 
-    public ClientUI(Server server) {
-        isLogin = false;
-        this.server = server;
+    public ClientUI() {
+        setting();
+        createPanel();
 
+        setVisible(true);
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    private void setting() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(WIDTH, HEIGHT);
         setLocationRelativeTo(null);
         setTitle("Client chat");
         setResizable(false);
+    }
 
-        createPanel();
+    @Override
+    public void showMessage(String text) {
+        chat.append(text + "\n");
+    }
 
-        setVisible(true);
+    public void disconnectFromServer() {
+        controller.disconnectFromServer();
+    }
+
+    public void hideHeaderPanel(boolean visible) {
+        loginPanel.setVisible(false);
     }
 
     private void createPanel() {
@@ -102,47 +115,22 @@ public class ClientUI extends JFrame implements View {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                connectToServer();
+                login();
             }
         });
 
         return loginPanel;
     }
 
-    public void connectToServer() {
-        if (server.connectUser(this)) {
-            appendLog("Вы успешно подключились!\n");
+    public void login() {
+        if (controller.connectToServer(username.getText())) {
             loginPanel.setVisible(false);
-            isLogin = true;
-            usernameChat = username.getText();
-            String log = server.getLogHistory();
-            if (log != null) {
-                appendLog(log);
-            }
-        } else {
-            appendLog("Подключение не удалось.\n");
-        }
-    }
-
-    public void disconnectFromServer() {
-        if (isLogin) {
-            loginPanel.setVisible(true);
-            isLogin = false;
-            server.disconnectUser(this);
-            appendLog("Вы были отключены от сервера!\n");
         }
     }
 
     public void message() {
-        if (isLogin) {
-            messageChat = message.getText();
-            if (!messageChat.equals("")) {
-                server.message(usernameChat + ": " + messageChat);
-                message.setText("");
-            }
-        } else {
-            appendLog("Нет подключения к серверу!");
-        }
+        controller.message(message.getText());
+        message.setText("");
     }
 
     public void answer(String text) {
@@ -155,10 +143,10 @@ public class ClientUI extends JFrame implements View {
 
     @Override
     protected void processWindowEvent(WindowEvent e) {
-        if (e.getID() == WindowEvent.WINDOW_CLOSING){
-            disconnectFromServer();
-        }
         super.processWindowEvent(e);
+        if (e.getID() == WindowEvent.WINDOW_CLOSING){
+            this.disconnectFromServer();
+        }
     }
 
 }
