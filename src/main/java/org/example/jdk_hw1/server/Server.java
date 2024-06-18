@@ -88,7 +88,7 @@ public class Server extends JFrame implements ServerView {
 
     @Override
     public void stopServer() {
-
+        controller.stopServer();
     }
 }
 
