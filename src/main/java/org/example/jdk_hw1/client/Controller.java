@@ -20,6 +20,7 @@ public class Controller {
 
     public boolean connectToServer(String name) {
         if (server.connectUser(this)) {
+            info.setName(name);
             connected = true;
             view.connectedToServer();
             showOnWindow("Вы успешно подключились!\n");
