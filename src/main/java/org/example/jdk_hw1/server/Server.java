@@ -1,9 +1,13 @@
 package org.example.jdk_hw1.server;
 
 import javax.swing.*;
+
+import org.example.jdk_hw1.client.Client;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Server extends JFrame {
 
@@ -14,8 +18,11 @@ public class Server extends JFrame {
     JButton start, stop;
 
     private boolean isServerWorking;
+
+    private ArrayList<Client> onlineUsers = new ArrayList();
     private String logHistory = "";
     private String chatHistory = "";
+
 
     public String getChatHistory() {
         return chatHistory;
@@ -84,5 +91,14 @@ public class Server extends JFrame {
 
     public boolean isServerWorking() {
         return isServerWorking;
+    }
+
+    public boolean connectUser(Client client) {
+        if (!onlineUsers.contains(client)) {
+            onlineUsers.add(client);
+            return true;
+        } else {
+            return false;    
+        }
     }
 }
