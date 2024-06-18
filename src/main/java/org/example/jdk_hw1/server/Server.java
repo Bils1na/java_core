@@ -22,15 +22,10 @@ public class Server extends JFrame {
 
     private boolean isServerWorking;
     private ArrayList<Client> onlineUsers;
-    private String logHistory = "";
 
 
     public String getLogHistory() {
-        return logHistory;
-    }
-
-    public void setLogHistory(String logHistory) {
-        this.logHistory = logHistory;
+        return readLog();
     }
 
     public Server() {
@@ -50,7 +45,7 @@ public class Server extends JFrame {
 
     private void createPanel() {
         add(createLog(), BorderLayout.CENTER);
-        add(createFoooterPanel(), BorderLayout.SOUTH);
+        add(createFooterPanel(), BorderLayout.SOUTH);
     }
 
     private Component createLog() {
