@@ -1,7 +1,3 @@
 Artem: Hello 
 NeArtem: How are you?
 Artem: I'm okay thx
-null: 123
-null: 321
-artem: hello
-lucya: hi

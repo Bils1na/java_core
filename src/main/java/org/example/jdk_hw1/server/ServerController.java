@@ -81,7 +81,7 @@ public class ServerController {
     public void disconnectUser(Controller controller) {
         if (controller != null && onlineUsers.contains(controller)) {
             onlineUsers.remove(controller);
-            controller.disconnectFromServer();
+            controller.disconnectedFromServer();
         }
     }
 

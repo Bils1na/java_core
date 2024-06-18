@@ -56,7 +56,7 @@ public class ClientUI extends JFrame implements View {
     }
 
     public void hideHeaderPanel(boolean visible) {
-        loginPanel.setVisible(false);
+        loginPanel.setVisible(visible);
     }
 
     private void createPanel() {
