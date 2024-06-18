@@ -138,7 +138,7 @@ public class Client extends JFrame {
         }
     }
 
-    private void answer(String text) {
+    public void answer(String text) {
         appendLog(text);
     }
 
