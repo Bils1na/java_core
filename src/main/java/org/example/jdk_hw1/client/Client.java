@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.WindowEvent;
 
 public class Client extends JFrame {
 
@@ -36,27 +38,9 @@ public class Client extends JFrame {
 
         createPanel();
 
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!server.isServerWorking()) {
-                    chat.setText("Server is stopped.\n");
-                } else {
-                    
-                }
-            }
-        });
+        
 
-        btnSend.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (isLogin && server.isServerWorking()) {
-                    
-                } else {
-                    chat.setText("Server is stopped.\n");
-                }
-            }
-        });
+        
 
         setVisible(true);
     }
@@ -73,12 +57,27 @@ public class Client extends JFrame {
         btnSend = new JButton("send");
         messagePanel.add(message);
         messagePanel.add(btnSend);
+
+        message.addKeyListener((KeyAdapter) e -> {
+            if (e.getKeyChar() == '\n') {
+                message();
+            }
+        });
+
+        btnSend.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                message();
+            }
+        });
+
         return messagePanel;
     }
 
     private Component createLog() {
         chat = new JTextArea();
         chat.setEditable(false);
+
         return chat;
     }
 
@@ -97,6 +96,13 @@ public class Client extends JFrame {
         loginInputPanel.add(password);
         loginPanel.add(loginInputPanel);
         loginPanel.add(btnLogin);
+
+        btnLogin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                connectToServer();
+            }
+        });
 
         return loginPanel;
     }
@@ -125,7 +131,6 @@ public class Client extends JFrame {
         }
     }
 
-
     public void message() {
         if (isLogin) {
             messageChat = message.getText();
@@ -144,6 +149,13 @@ public class Client extends JFrame {
 
     private void appendLog(String text) {
         chat.append(text + "\n");
+    }
+
+    protected void processWindowEvent(WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING){
+            disconnectFromServer();
+        }
+        super.processWindowEvent(e);
     }
 
 }
