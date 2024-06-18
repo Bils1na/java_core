@@ -1,6 +1,6 @@
 package org.example.jdk_hw1.client;
 
-import org.example.jdk_hw1.server.Server;
+import org.example.jdk_hw1.server.ServerController;
 
 /**
  * Класс содержащий логику работы клиента
@@ -12,18 +12,18 @@ public class Controller {
     private ServerController server;
     private boolean connected;
 
-    public Controller(View view /*ServerController serverController*/) {
+    public Controller(View view, ServerController server) {
         this.view = view;
-        //this.server = serverController;
+        this.server = server;
         info = new Info();
     }
 
     public boolean connectToServer(String name) {
         if (server.connectUser(this)) {
             connected = true;
-            view.connectToServer();
+            view.connectedToServer();
             showOnWindow("Вы успешно подключились!\n");
-            log = server.getHistory();
+            String log = server.getHistory();
             if (log != null) {
                 showOnWindow(log);
             }
@@ -38,7 +38,7 @@ public class Controller {
     public void disconnectedFromServer() {
         if (connected) {
             connected = false;
-            view.disconnectFromServer();
+            view.disconnectedFromServer();
             showOnWindow("Вы были отключены от сервера!\n");
         }
     }
@@ -54,14 +54,14 @@ public class Controller {
     public void message(String text) {
         if (connected) {
             if (!text.isEmpty()) {
-                server.message(name + ": " + text);
+                server.message(info.getName() + ": " + text);
             }
         } else {
             showOnWindow("Нет подключения к серверу.\n");
         }
     }
 
-    private void showOnWindow(String text) {
+    protected void showOnWindow(String text) {
         view.showMessage(text);
     }
 

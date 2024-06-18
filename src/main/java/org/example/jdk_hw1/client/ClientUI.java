@@ -1,7 +1,5 @@
 package org.example.jdk_hw1.client;
 
-import org.example.jdk_hw1.server.Server;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -48,6 +46,11 @@ public class ClientUI extends JFrame implements View {
         chat.append(text + "\n");
     }
 
+    @Override
+    public void disconnectedFromServer() {
+        hideHeaderPanel(true);
+    }
+
     public void disconnectFromServer() {
         controller.disconnectFromServer();
     }
@@ -60,6 +63,17 @@ public class ClientUI extends JFrame implements View {
         add(createHeaderPanel(), BorderLayout.NORTH);
         add(createLog(), BorderLayout.CENTER);
         add(createFooterPanel(), BorderLayout.SOUTH);
+    }
+
+    public void connectedToServer() {
+        if (controller.connectToServer(username.getText())) {
+            loginPanel.setVisible(false);
+        }
+    }
+
+    public void message() {
+        controller.message(message.getText());
+        message.setText("");
     }
 
     private Component createFooterPanel() {
@@ -77,7 +91,7 @@ public class ClientUI extends JFrame implements View {
                 }
             }
         });
-        
+
 
         btnSend.addActionListener(new ActionListener() {
             @Override
@@ -115,37 +129,18 @@ public class ClientUI extends JFrame implements View {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                login();
+                connectedToServer();
             }
         });
 
         return loginPanel;
     }
 
-    public void login() {
-        if (controller.connectToServer(username.getText())) {
-            loginPanel.setVisible(false);
-        }
-    }
-
-    public void message() {
-        controller.message(message.getText());
-        message.setText("");
-    }
-
-    public void answer(String text) {
-        appendLog(text);
-    }
-
-    private void appendLog(String text) {
-        chat.append(text + "\n");
-    }
-
     @Override
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);
         if (e.getID() == WindowEvent.WINDOW_CLOSING){
-            this.disconnectFromServer();
+            this.disconnectedFromServer();
         }
     }
 
