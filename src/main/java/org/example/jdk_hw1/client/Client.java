@@ -53,11 +53,8 @@ public class Client extends JFrame {
         messagePanel.add(message);
         messagePanel.add(btnSend);
 
-        message.addKeyListener((KeyAdapter) e -> {
-            if (e.getKeyChar() == '\n') {
-                message();
-            }
-        });
+        //message.addKeyListener();
+        // TODO: доделать лиснер на клавишу enter 
 
         btnSend.addActionListener(new ActionListener() {
             @Override
@@ -129,7 +126,7 @@ public class Client extends JFrame {
     public void message() {
         if (isLogin) {
             messageChat = message.getText();
-            if (!text.equals("")) {
+            if (!messageChat.equals("")) {
                 server.message(usernameChat + ": " + messageChat);
                 message.setText("");
             }
