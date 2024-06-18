@@ -2,7 +2,7 @@ package org.example.jdk_hw1.server;
 
 import javax.swing.*;
 
-import org.example.jdk_hw1.client.Client;
+import org.example.jdk_hw1.client.ClientUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,7 @@ public class Server extends JFrame {
     JButton start, stop;
 
     private boolean isServerWorking;
-    private ArrayList<Client> onlineUsers;
+    private ArrayList<ClientUI> onlineUsers;
 
 
     public String getLogHistory() {
@@ -95,10 +95,10 @@ public class Server extends JFrame {
         return isServerWorking;
     }
 
-    public boolean connectUser(Client client) {
+    public boolean connectUser(ClientUI clientUI) {
         if (isServerWorking) {
-            if (!onlineUsers.contains(client)) {
-                onlineUsers.add(client);
+            if (!onlineUsers.contains(clientUI)) {
+                onlineUsers.add(clientUI);
                 return true;
             } else {
                 return false;    
@@ -108,10 +108,10 @@ public class Server extends JFrame {
         }
     }
 
-    public void disconnectUser(Client client) {
-        if (client != null && onlineUsers.contains(client)) {
-            onlineUsers.remove(client);
-            client.disconnectFromServer();
+    public void disconnectUser(ClientUI clientUI) {
+        if (clientUI != null && onlineUsers.contains(clientUI)) {
+            onlineUsers.remove(clientUI);
+            clientUI.disconnectFromServer();
         }
     }
 
@@ -126,8 +126,8 @@ public class Server extends JFrame {
     }
 
     private void answerAll(String text) {
-        for (Client client: onlineUsers) {
-            client.answer(text);
+        for (ClientUI clientUI : onlineUsers) {
+            clientUI.answer(text);
         }
     }
 
@@ -142,7 +142,7 @@ public class Server extends JFrame {
       
     private String readLog() {
         StringBuilder stringBuilder = new StringBuilder();
-        try (FileReader reader =  new FileReader(LOG_PATH)) {
+        try (FileReader reader = new FileReader(LOG_PATH)) {
             int c;
             while ((c = reader.read()) != -1) {
                 stringBuilder.append((char) c);
@@ -156,7 +156,7 @@ public class Server extends JFrame {
     }
 
     private void appendLog(String text) { 
-        log.append(text);
+        log.append(text + "\n");
     }
 
 

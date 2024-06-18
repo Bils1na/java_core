@@ -10,7 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
-public class Client extends JFrame {
+public class ClientUI extends JFrame implements View {
 
     private static final int WIDTH = 400;
     private static final int HEIGHT = 400;
@@ -25,8 +25,10 @@ public class Client extends JFrame {
     private JPanel loginPanel;
     private String usernameChat, messageChat;
 
+    private Controller controller;
 
-    public Client(Server server) {
+
+    public ClientUI(Server server) {
         isLogin = false;
         this.server = server;
 
@@ -107,7 +109,7 @@ public class Client extends JFrame {
         return loginPanel;
     }
 
-    private void connectToServer() {
+    public void connectToServer() {
         if (server.connectUser(this)) {
             appendLog("Вы успешно подключились!\n");
             loginPanel.setVisible(false);
