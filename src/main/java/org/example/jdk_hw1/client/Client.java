@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 public class Client extends JFrame {
@@ -53,8 +54,15 @@ public class Client extends JFrame {
         messagePanel.add(message);
         messagePanel.add(btnSend);
 
-        //message.addKeyListener();
-        // TODO: доделать лиснер на клавишу enter 
+        message.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (e.getKeyChar() == '\n') {
+                    message();
+                }
+            }
+        });
+        
 
         btnSend.addActionListener(new ActionListener() {
             @Override
