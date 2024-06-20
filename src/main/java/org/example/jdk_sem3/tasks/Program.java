@@ -26,6 +26,12 @@ public class Program {
         System.out.println(collection.toString());
         collection.delete(1);
         System.out.println(collection.toString());
+
+
+    }
+
+    private static <T extends Number, V extends Number> void sum(T a, V b) {
+
     }
 
 }
