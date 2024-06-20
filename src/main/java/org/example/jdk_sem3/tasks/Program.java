@@ -18,20 +18,20 @@ public class Program {
 //        MyClass<String, DataInputStream, Integer> myClass = new MyClass<>("Text", new DataInputStream(System.in), 9);
 //        myClass.nameVarClasses();
 
-        MyCollection<String> collection = new MyCollection<>();
-        collection.add("Artem");
-        collection.add("Andrey");
-        collection.add("Maslo");
-        collection.add("Mylo");
-        System.out.println(collection.toString());
-        collection.delete(1);
-        System.out.println(collection.toString());
+//        MyCollection<String> collection = new MyCollection<>();
+//        collection.add("Artem");
+//        collection.add("Andrey");
+//        collection.add("Maslo");
+//        collection.add("Mylo");
+//        System.out.println(collection.toString());
+//        collection.delete(1);
+//        System.out.println(collection.toString());
 
 
     }
 
     private static <T extends Number, V extends Number> void sum(T a, V b) {
 
-    }
+   }
 
 }
